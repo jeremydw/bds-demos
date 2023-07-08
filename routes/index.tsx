@@ -2,7 +2,11 @@ export function Page() {
   return (
     <>
       {/* Custom elements are intelligently collected by Root.js. */}
-      <my-element>Content</my-element>
+      <bds-audio-player
+        title="Podcast title"
+        subtitle="Podcast subtitle"
+        src="https://www.google.com/googleblogs/images/cadie/sunday_panda.mp3"
+      ></bds-audio-player>
     </>
   );
 }

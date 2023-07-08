@@ -1,4 +1,120 @@
 .container {
-  border: 2px solid red;
-  padding: 20px;
+  border: 1px solid #dadce0;
+  border-radius: 15px;
+  box-sizing: border-box;
+  padding: 20px 20px 5px;
+  width: 520px;
+  max-width: 100%;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.actions {
+  display: flex;
+  gap: 24px;
+}
+
+.actions__control {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.actions__control button {
+  width: 48px;
+  height: 48px;
+}
+
+.actions__description {
+  display: flex;
+  gap: 2px;
+  flex-direction: column;
+}
+
+.actions__description__title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.actions__description__subtitle {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.timeline {
+  display: grid;
+  gap: 10px;
+  align-items: center;
+  grid-template-columns: 24px 24px auto;
+}
+
+.timeline__button button {
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.timeline {
+  transition: height 300ms ease, opacity 300ms ease, visibility 300ms ease,
+    padding 300ms ease;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  height: 0;
+  padding-bottom: 5px;
+}
+
+.timeline\:visible {
+  padding-bottom: 0;
+  opacity: 1;
+  visibility: visible;
+  height: 54px;
+}
+
+button {
+  padding: 0;
+  border: 1px solid #999;
+  border-radius: 100%;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button--subtle {
+  border-color: transparent;
+}
+
+audio {
+  background-color: transparent;
+  display: flex;
+  padding: 0;
+  width: 100%;
+}
+
+audio::-webkit-media-controls-panel,
+audio::-webkit-media-controls-timeline-container {
+  padding: 0;
+}
+
+audio::-webkit-media-controls-start-playback-button,
+audio::-webkit-media-controls-play-button,
+audio::-webkit-media-controls-pause-button {
+  display: none !important;
+}
+
+audio::-webkit-media-controls-enclosure {
+  background: transparent;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  font-size: 14px;
+  line-height: 20px;
+  font-family: 'Google Sans', 'Roboto';
 }
