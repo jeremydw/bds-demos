@@ -38,6 +38,16 @@ class AudioPlayer extends LitElement {
   @state()
   hasPlayed = false;
 
+  #internals: ElementInternals;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.#internals = this.attachInternals();
+    this.#internals.role = 'region';
+    this.#internals.ariaLabel = `Audio player: ${this.title}`;
+  }
+
+  /** Play or pause the audio. */
   toggle() {
     if (this.status === 'paused') {
       this.audioElement.play();
@@ -59,6 +69,7 @@ class AudioPlayer extends LitElement {
     this.status = 'paused';
   }
 
+  /** Advance the timeline by a specified number of seconds. */
   seek(seconds: number) {
     let position = this.audioElement.currentTime + seconds;
     if (position < 0) {
@@ -79,37 +90,73 @@ class AudioPlayer extends LitElement {
       <div class="container">
         <div class="actions">
           <div class="actions__control">
-            <button @click=${() => this.toggle()}>
+            <button class="button"
+              @click=${() => this.toggle()}
+              aria-label=${this.status === 'paused' ? 'Play' : 'Pause'}
+            >
               ${this.status === 'paused' ? PlayArrow : Pause}
             </button>
-            <div class="actions__control__duration" aria-hidden=${ifDefined(
-              this.duration ? undefined : true
-            )}>${
-      this.duration ? formatSeconds(this.duration) : html`&nbsp;`
-    }</div>
+            <div
+              class="actions__control__duration"
+              aria-label=${ifDefined(
+                this.duration ? `Duration: ${this.duration}` : undefined
+              )}
+              aria-hidden=${ifDefined(this.duration ? undefined : true)}
+            >
+              ${this.duration ? formatSeconds(this.duration) : html`&nbsp;`}
+            </div>
           </div>
           <div class="actions__description">
-            <div class="actions__description__title">${this.title}</div>
-            <div class="actions__description__subtitle">${this.subtitle}</div>
+            ${
+              this.title
+                ? html`<div class="actions__description__title">
+                  ${this.title}
+                </div>`
+                : nothing
+            }
+            ${
+              this.subtitle
+                ? html`<div class="actions__description__subtitle">
+                  ${this.subtitle}
+                </div>`
+                : nothing
+            }
           </div>
         </div>
-        <div class=${classMap({
-          timeline: true,
-          'timeline:visible': this.hasPlayed,
-        })}>
+        <div
+          class=${classMap({
+            timeline: true,
+            'timeline:visible': this.hasPlayed,
+          })}
+        >
           <div class="timeline__button">
-            <button class="button--subtle" aria-label="Replay 10" @click=${() =>
-              this.seek(-10)}>${Replay10}</button>
+            <button
+              class="button button--subtle button--small"
+              aria-label="Go back 10 seconds"
+              @click=${() => this.seek(-10)}
+            >
+              ${Replay10}
+            </button>
           </div>
           <div class="timeline__button">
-            <button class="button--subtle" aria-label="Forward 10" @click=${() =>
-              this.seek(10)}>${Forward10}</button>
+            <button
+              class="button button--subtle button--small"
+              aria-label="Go forward 10 seconds"
+              @click=${() => this.seek(10)}
+            >
+              ${Forward10}
+            </button>
           </div>
           <div class="timeline__audio">
-            <audio src="${this.src}" controls @loadedmetadata=${() =>
-      this.requestUpdate()} @play=${this.onPlay} @pause=${
-      this.onPause
-    } @ended=${this.onEnded}></audio>
+            <audio
+              title=${this.title}
+              src="${this.src}"
+              controls
+              @loadedmetadata=${() => this.requestUpdate()}
+              @play=${this.onPlay}
+              @pause=${this.onPause}
+              @ended=${this.onEnded}
+            ></audio>
           </div>
         </div>
       </div>

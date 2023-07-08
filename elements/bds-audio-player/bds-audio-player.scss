@@ -52,12 +52,6 @@
   grid-template-columns: 24px 24px auto;
 }
 
-.timeline__button button {
-  width: 24px;
-  height: 24px;
-  overflow: hidden;
-}
-
 .timeline {
   transition: height 300ms ease, opacity 300ms ease, visibility 300ms ease,
     padding 300ms ease;
@@ -66,6 +60,8 @@
   visibility: hidden;
   height: 0;
   padding-bottom: 5px;
+  padding-inline-start: 4px;
+  margin-inline-start: -4px;
 }
 
 .timeline\:visible {
@@ -77,17 +73,61 @@
 
 button {
   padding: 0;
-  border: 1px solid #999;
+  border: 1px solid #dadce0;
   border-radius: 100%;
   background: white;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 200ms ease;
+  position: relative;
+  z-index: 1;
+}
+
+.button::before,
+.button::after {
+  content: '';
+  display: block;
+  height: calc(100% + 4px);
+  width: calc(100% + 4px);
+  border-radius: 100%;
+  visibility: hidden;
+  position: absolute;
+}
+
+.button:hover {
+  background-color: #eaeaeb;
+}
+
+.button:active {
+  background-color: #e1e3e4;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:focus-visible::before,
+.button:focus-visible::after {
+  visibility: visible;
+}
+
+.button:focus-visible::before {
+  border: 2px solid rgb(25, 103, 210);
+}
+
+.button:focus-visible:after {
+  border: 1px solid rgb(138, 180, 248);
 }
 
 .button--subtle {
   border-color: transparent;
+}
+
+.button--small {
+  width: 24px;
+  height: 24px;
 }
 
 audio {
